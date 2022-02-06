@@ -1,13 +1,29 @@
 const express = require("express");
+const redis = require("redis");
+
+// constant
+const redisKey = "visiters";
+const port = 8080;
+
+// init redis client
+const redisClient = redis.createClient();
+(async () => {
+  await redisClient.connect();
+  await redisClient.set(redisKey, 0);
+})();
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.sendStatus(200);
-});
-
-const port = 8080;
+app.get("/", func);
 
 app.listen(port, () => {
   console.log(`listening on: http://localhost:${port}`);
 });
+
+async function func(req, res) {
+  const result = await redisClient.get(redisKey);
+
+  res.status(200).json({ visits: result });
+
+  await redisClient.set(redisKey, parseInt(result) + 1);
+}
