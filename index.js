@@ -21,7 +21,9 @@ async function flow() {
 }
 
 async function getRedisClient() {
-  const redisClient = redis.createClient();
+  const redisClient = redis.createClient({
+    socket: { host: "localhost", port: 6379 },
+  });
   await redisClient.connect();
   console.log("redis connect");
 
