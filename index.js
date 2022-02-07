@@ -22,7 +22,10 @@ async function flow() {
 
 async function getRedisClient() {
   const redisClient = redis.createClient({
-    socket: { host: "localhost", port: 6379 },
+    socket: {
+      host: "redis-server", // use service name in docker-compose
+      port: 6379,
+    },
   });
   await redisClient.connect();
   console.log("redis connect");
