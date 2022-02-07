@@ -6,3 +6,4 @@ services:
     build: . # Dockerfile
     ports:
       - 3000:8080
+    restart: always

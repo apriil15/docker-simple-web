@@ -13,7 +13,8 @@ async function flow() {
 
   const app = express();
 
-  app.get("/", func);
+  app.get("/", normalFunc);
+  app.get("/restart", restartFunc);
 
   app.listen(port, () => {
     console.log(`listening on: http://localhost:${port}`);
@@ -36,10 +37,15 @@ async function getRedisClient() {
   return redisClient;
 }
 
-async function func(req, res) {
+async function normalFunc(req, res) {
   const result = await redisClient.get(redisKey);
 
   res.status(200).json({ visits: result });
 
   await redisClient.set(redisKey, parseInt(result) + 1);
+}
+
+function restartFunc(req, res) {
+  console.log("process exit, the container is going to restart");
+  process.exit(0);
 }
