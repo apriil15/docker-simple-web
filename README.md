@@ -11,5 +11,5 @@ docker-compose up
 
 ### Go to browser
 
-normal: http://localhost:3000
-check container restart: http://localhost:3000/restart
+- normal: http://localhost:3000
+- check container restart: http://localhost:3000/restart
