@@ -3,6 +3,7 @@ services:
   redis-server:
     image: redis:alpine
   node-app:
+    image: node-app # image name
     build: . # Dockerfile
     ports:
       - 3000:8080
